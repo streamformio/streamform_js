@@ -3,7 +3,7 @@
      * Streamform SDK
      * @param {Object} config - Configuration object
      * @param {string} config.token - Authentication token
-     * @param {string} [config.apiHost="https://api.streamform.local"] - API host
+     * @param {string} [config.apiHost="https://api.streamform.io"] - API host
      * @param {Array<string>} [config.maskPatterns=[]] - Patterns to mask in URLs
      * @param {Array<string>} [config.skipPatterns=[]] - Patterns to skip in URLs
      * @param {boolean} [config.cookieOnIdentify=false] - Set cookie on identify
@@ -11,7 +11,7 @@
     function Streamform(config) {
         let localStorageKey = "streamform_vid",
             authToken = config.token,
-            apiHost = config.apiHost ?? "https://api.streamform.local",
+            apiHost = config.apiHost ?? "https://api.streamform.io",
             maskPatterns = config.maskPatterns ?? [],
             skipPatterns = config.skipPatterns ?? [],
             setCookieOnIdentify = config.cookieOnIdentify ?? false,
