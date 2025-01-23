@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = {
     entry: './src/streamform.js',
     output: {
-        filename: './dist/streamform.min.js',
+        filename: 'streamform.min.js',
         path: path.resolve(__dirname, 'dist'),
         library: 'Streamform',
         libraryTarget: 'umd',

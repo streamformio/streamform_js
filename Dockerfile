@@ -12,7 +12,3 @@ RUN npm install
 
 # Copy the rest of the application
 COPY . .
-
-# Default command to build and test the SDK
-# CMD ["npm", "run", "build"]
-# CMD ["tail", "-f", "/dev/null"]

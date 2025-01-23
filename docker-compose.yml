@@ -5,4 +5,4 @@ services:
     container_name: streamform-sdk
     volumes:
       - .:/usr/src/app
-    command: tail -f /dev/null
+    command: npm run build
