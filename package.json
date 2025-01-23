@@ -1,0 +1,27 @@
+{
+    "name": "streamform-sdk",
+    "version": "1.0.0",
+    "description": "Streamform SDK for client-side tracking",
+    "main": "dist/streamform.min.js",
+    "scripts": {
+        "build": "webpack",
+        "test": "jest",
+        "lint": "eslint src/*.js"
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "@babel/core": "^7.x",
+        "@babel/preset-env": "^7.x",
+        "babel-loader": "^8.x",
+        "eslint": "^7.x",
+        "jest": "^26.x",
+        "webpack": "^5.x",
+        "webpack-cli": "^4.x"
+    },
+    "keywords": [
+        "sdk",
+        "tracking",
+        "analytics"
+    ],
+    "license": "MIT"
+}

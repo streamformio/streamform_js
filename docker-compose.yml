@@ -1,0 +1,8 @@
+version: "3.8"
+services:
+  sdk:
+    build: .
+    container_name: streamform-sdk
+    volumes:
+      - .:/usr/src/app
+    command: tail -f /dev/null
