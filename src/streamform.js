@@ -90,11 +90,11 @@
                 sendMessageRequest({
                     eventName: "page",
                     eventType: "navigation",
+                    origin: window.location.origin,
                     page: {
                         pathname: sanitizedPath + window.location.search,
                         referrer: initialReferrer,
                         pageTitle: document.title,
-                        referrer: document.referrer
                     }
                 });
 
@@ -113,11 +113,11 @@
                 sendMessageRequest({
                     eventName: eventName,
                     eventType: "track",
+                    origin: window.location.origin,
                     page: {
                         pathname: sanitizedPath + window.location.search,
                         referrer: initialReferrer,
                         pageTitle: document.title,
-                        referrer: document.referrer
                     },
                     data: eventData
                 });
