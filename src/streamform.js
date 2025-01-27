@@ -74,6 +74,17 @@
             }, true);
         }
 
+        function getUTMParameters() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const utmParams = {};
+            ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach(param => {
+                if (urlParams.has(param)) {
+                    utmParams[param] = urlParams.get(param);
+                }
+            });
+            return Object.keys(utmParams).length > 0 ? utmParams : null;
+        }
+
         function trackPageView() {
             if (currentPath === window.location.pathname) {
                 return;
@@ -87,15 +98,22 @@
                     initialReferrer = null;
                 }
 
+                const utmParams = getUTMParameters();
+                const pageData = {
+                    pathname: sanitizedPath + window.location.search,
+                    referrer: initialReferrer,
+                    pageTitle: document.title
+                };
+
+                if (utmParams) {
+                    pageData.utmParams = utmParams;
+                }
+
                 sendMessageRequest({
                     eventName: "page",
                     eventType: "navigation",
                     origin: window.location.origin,
-                    page: {
-                        pathname: sanitizedPath + window.location.search,
-                        referrer: initialReferrer,
-                        pageTitle: document.title,
-                    }
+                    page: pageData
                 });
 
                 if (initialReferrer) {
