@@ -62,8 +62,38 @@
             initializePageTracking();
         }
 
+        function sendRequest(url, data, useBeacon = true) {
+            if (isDoNotTrackEnabled()) {
+                return Promise.resolve();
+            }
+
+            let payload = { ...data };
+
+            if (userFields.userId) {
+                payload.visitorId = userFields.userId;
+            }
+
+            if (visitorId) {
+                payload.visitorId = visitorId;
+            }
+
+            if (useBeacon && navigator?.sendBeacon) {
+                navigator.sendBeacon(url, JSON.stringify(payload));
+                return Promise.resolve();
+            } else {
+                return fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(payload),
+                    keepalive: true
+                });
+            }
+        }
+
         function sendMessageRequest(eventData) {
-            sendRequest(`${apiHost}/message`, {
+            return sendRequest(`${apiHost}/message`, {
                 token: authToken,
                 deviceTimestamp: new Date().toISOString(),
                 device: {
@@ -204,43 +234,14 @@
             return path;
         }
 
-        function sendRequest(url, data, useBeacon = true) {
-            if (isDoNotTrackEnabled()) {
-                return Promise.resolve();
-            }
-
-            let payload = { ...data };
-
-            if (userFields.userId) {
-                payload.visitorId = userFields.userId;
-            }
-
-            if (visitorId) {
-                payload.visitorId = visitorId;
-            }
-
-            if (useBeacon && navigator?.sendBeacon) {
-                navigator.sendBeacon(url, JSON.stringify(payload));
-                return Promise.resolve();
-            } else {
-                return fetch(url, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(payload),
-                    keepalive: true
-                });
-            }
-        }
-
         function updateUserFields(fields) {
             userFields = { ...userFields, ...fields };
 
-            sendRequest(`${apiHost}/s/su`, {
-                token: authToken,
-                fields: userFields
-            }, false).then(async response => {
+            sendMessageRequest({
+                eventType: "identify",
+                origin: window.location.origin,
+                data: userFields
+            }).then(async response => {
                 if (response) {
                     let result = await response.json();
 
