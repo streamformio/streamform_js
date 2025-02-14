@@ -258,7 +258,7 @@
         return {
             track: trackEvent,
             page: trackPageView,
-            setUser: updateUserFields,
+            identify: updateUserFields,
             enableAutoPageView: enableAutoPageView,
             doNotTrack: enableDoNotTrack
         };
